@@ -1,34 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# throwingdiscminecraft.com
 
-## Getting Started
+Next.js static site for **Throwing Disc Minecraft** SEO coverage. Deploys to **Cloudflare Pages** via `output: "export"` → `out/`.
 
-First, run the development server:
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build   # writes static files to out/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Cloudflare Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Setting | Value |
+| --- | --- |
+| Framework preset | Next.js (static) or None |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+| Node version | 20+ |
 
-## Learn More
+Connect the Git repo in the Cloudflare dashboard, or upload `out/` with Wrangler:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx wrangler pages deploy out --project-name=throwingdiscminecraft
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Update content (ops)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+No external CMS required for P0. Edit TypeScript data modules and redeploy:
 
-## Deploy on Vercel
+| File | Purpose |
+| --- | --- |
+| `src/data/discs.ts` | Tiers, recipes, damage/durability |
+| `src/data/faqs.ts` | FAQ copy (feeds JSON-LD) |
+| `src/data/timeline.ts` | Update / snapshot timeline |
+| `src/data/site.ts` | Site URL, lastUpdated, official links |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Set `SITE.lastUpdated` whenever you publish factual changes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routes (P0)
+
+English: `/` · `/crafting` · `/stats` · `/vs-trident` · `/tips` · `/bedrock-offhand` · `/update` · `/wiki` · `/disk` · `/chakram`
+
+Chinese mirrors: `/zh` · `/zh/crafting` · … (same set). Header language switch preserves the current page.
+
+Chinese copy: `src/data/zh-content.ts` · UI strings: `src/lib/i18n.ts`
+
+## Notes
+
+- Fan site — not affiliated with Mojang/Microsoft.
+- Damage numbers are TBD until snapshots; placeholders are intentional.
+- `hreflang` en/zh is set per page and in `sitemap.xml`.

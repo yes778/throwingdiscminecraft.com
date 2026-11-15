@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects
+/throwing-disk /disk/ 301
+/throwing-disc / 301
+/offhand /bedrock-offhand/ 301
+/off-hand /bedrock-offhand/ 301
